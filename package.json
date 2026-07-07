@@ -7,7 +7,7 @@
 		"start": "node server.js",
 		"dev": "nodemon server.js",
 		"check": "biome check --write",
-    "db:init": "mysql -u root -p < schema.sql"
+		"db:init": "mysql -u root -p < schema.sql"
 	},
 	"keywords": [],
 	"author": "",
@@ -20,6 +20,7 @@
 		"mysql2": "^3.22.5"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^2.5.2",
 		"nodemon": "^3.1.14"
 	}
 }
