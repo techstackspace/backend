@@ -1,15 +1,17 @@
-const express = require("express");
+import { Router } from "express";
 
-const router = express.Router();
-const {
+const router = Router();
+
+import {
 	createTicket,
-	getTickets,
 	getTicketById,
+	getTickets,
 	updateTicketStatus,
-} = require("../controllers/ticketController");
+} from "../controllers/ticketController.js";
+
 router.post("/", createTicket);
 router.get("/", getTickets);
 router.get("/:id", getTicketById);
 router.put("/:id/status", updateTicketStatus);
 
-module.exports = router;
+export default router;

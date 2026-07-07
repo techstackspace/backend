@@ -1,4 +1,4 @@
-const db = require("../config/db");
+import execute from "../config/db.js";
 
 const createTicket = async (req, res) => {
 	try {
@@ -10,7 +10,7 @@ const createTicket = async (req, res) => {
 			});
 		}
 		const sql = `INSERT INTO tickets (name, email, subject, description, priority) VALUES (?, ?, ?, ?, ?)`;
-		const [result] = await db.execute(sql, [
+		const [result] = await execute(sql, [
 			name,
 			email,
 			subject,
@@ -47,7 +47,7 @@ const getTickets = async (req, res) => {
 			sql += ` WHERE ${conditions.join(" AND ")}`;
 		}
 		sql += " ORDER BY created_at DESC";
-		const [tickets] = await db.execute(sql, values);
+		const [tickets] = await execute(sql, values);
 		res.status(200).json(tickets);
 	} catch (error) {
 		console.error(error);
@@ -59,9 +59,7 @@ const getTickets = async (req, res) => {
 const getTicketById = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const [ticket] = await db.execute("SELECT * FROM tickets WHERE id = ?", [
-			id,
-		]);
+		const [ticket] = await execute("SELECT * FROM tickets WHERE id = ?", [id]);
 		if (ticket.length === 0) {
 			return res.status(404).json({ message: "Ticket not found" });
 		}
@@ -83,7 +81,7 @@ const updateTicketStatus = async (req, res) => {
 				message: "Invalid status",
 			});
 		}
-		const [result] = await db.execute(
+		const [result] = await execute(
 			"UPDATE tickets SET status = ? WHERE id = ?",
 			[status, id],
 		);
@@ -100,9 +98,4 @@ const updateTicketStatus = async (req, res) => {
 	}
 };
 
-module.exports = {
-	createTicket,
-	getTickets,
-	getTicketById,
-	updateTicketStatus,
-};
+export { createTicket, getTicketById, getTickets, updateTicketStatus };

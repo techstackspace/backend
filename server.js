@@ -1,12 +1,14 @@
-require("dotenv").config();
+import { config } from "dotenv";
 
-const express = require("express");
-const cors = require("cors");
-const ticketRoutes = require("./routes/ticketRoutes");
+config();
+
+import cors from "cors";
+import express, { json } from "express";
+import ticketRoutes from "./routes/ticketRoutes.js";
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(json());
 app.use("/api/tickets", ticketRoutes);
 const PORT = process.env.PORT || 4000;
 
